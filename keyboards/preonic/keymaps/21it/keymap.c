@@ -28,7 +28,12 @@ enum preonic_keycodes {
   QWERTY = SAFE_RANGE,
   LOWER,
   RAISE,
-  BACKLIT
+  BACKLIT,
+  EM_SRG,
+  EM_LEN,
+  EM_FLP,
+  EM_FIN,
+  EM_FIX
 };
 
 enum unicode_names {
@@ -151,23 +156,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 /* Adjust (Lower + Raise)
- * ,-----------------------------------------------------------------------------------.
- * |MusTog|  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 |  F11 |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |  F12 |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      | Reset|
- * `-----------------------------------------------------------------------------------'
+ *
+ * F-keys, media and mouse controls, emoji, settings, modes.
+ *
  */
 [_ADJUST] = LAYOUT_preonic_grid(
-  MU_TOG,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_F12,
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  MU_TOG,  KC_BRID, KC_BRIU, _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU, EM_SRG,
+  _______, KC_F1  , KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_BTN4, KC_BTN1, KC_BTN2, KC_BTN3, EM_FIN,  EM_LEN,
+  _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, EM_FIX,  EM_FLP,
+  _______, KC_F11,  KC_F12,  KC_PSCR, KC_SCRL, KC_PAUS, KC_WH_L, KC_WH_U, KC_WH_D, KC_WH_R, _______, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RESET
 )
 
@@ -220,6 +217,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             #endif
           }
           return false;
+          break;
+        case EM_SRG:
+          if (record->event.pressed) {
+            send_unicode_string("¯\\_(ツ)_/¯");
+          }
+          break;
+        case EM_LEN:
+          if (record->event.pressed) {
+            send_unicode_string("( ͡° ͜ʖ ͡°)");
+          }
+          break;
+        case EM_FLP:
+          if (record->event.pressed) {
+            send_unicode_string("(╯°□°）╯︵ ┻━┻");
+          }
+          break;
+        case EM_FIN:
+          if (record->event.pressed) {
+            send_unicode_string("°◡°");
+          }
+          break;
+        case EM_FIX:
+          if (record->event.pressed) {
+            send_unicode_string("┬─┬ ノ( ゜-゜ノ)");
+          }
           break;
       }
     return true;
