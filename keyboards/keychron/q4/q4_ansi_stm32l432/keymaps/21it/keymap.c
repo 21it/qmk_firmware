@@ -25,6 +25,60 @@ enum layers {
     _FN3
 };
 
+enum unicode_names {
+    // Small Spanish letters
+    AC_SA,
+    AC_SE,
+    AC_SI,
+    AC_SO,
+    AC_SU,
+    TI_SN,
+    DI_SU,
+    // Capital Spanish letters
+    AC_CA,
+    AC_CE,
+    AC_CI,
+    AC_CO,
+    AC_CU,
+    TI_CN,
+    DI_CU,
+    // Ohter Spanish symbols
+    REV_Q,
+    REV_E
+};
+
+const uint32_t PROGMEM unicode_map[] = {
+    // Small Spanish letters
+    [AC_SA] = 0x00E1, // á
+    [AC_SE] = 0x00E9, // é
+    [AC_SI] = 0x00ED, // í
+    [AC_SO] = 0x00F3, // ó
+    [AC_SU] = 0x00FA, // ú
+    [TI_SN] = 0x00F1, // ñ
+    [DI_SU] = 0x00FC, // ü
+    // Capital Spanish letters
+    [AC_CA] = 0x00C1, // Á
+    [AC_CE] = 0x00C9, // É
+    [AC_CI] = 0x00CD, // Í
+    [AC_CO] = 0x00D3, // Ó
+    [AC_CU] = 0x00DA, // Ú
+    [TI_CN] = 0x00D1, // Ñ
+    [DI_CU] = 0x00DC, // Ü
+    // Ohter Spanish symbols
+    [REV_Q] = 0x00BF, // ¿
+    [REV_E] = 0x00A1  // ¡
+};
+
+#define AC_A XP(AC_SA, AC_CA)
+#define AC_E XP(AC_SE, AC_CE)
+#define AC_I XP(AC_SI, AC_CI)
+#define AC_O XP(AC_SO, AC_CO)
+#define AC_U XP(AC_SU, AC_CU)
+#define TI_N XP(TI_SN, TI_CN)
+#define DI_U XP(DI_SU, DI_CU)
+#define ES_Q XP(REV_Q, REV_Q)
+#define ES_E XP(REV_E, REV_E)
+
 enum custom_keycodes {
     KC_MISSION_CONTROL = SAFE_RANGE,
     KC_LAUNCHPAD,
@@ -72,17 +126,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL, KC_LGUI, KC_LALT,                            KC_SPC,                             KC_RALT,  MO(_FN2), MO(_FN3), KC_RCTL),
 
     [_FN1] = LAYOUT_ansi_61(
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_MINS, KC_EQL,   _______,  _______,  _______,
-        _______, _______, _______, _______, _______, _______, _______, KC_INS,  KC_DEL,  KC_LBRC, KC_RBRC,  _______,  _______,  KC_GRV,
+        MO(_FN3),_______, _______, _______, _______, _______, _______, _______, _______, KC_MINS, KC_EQL,   _______,  _______,  _______,
+        MO(_FN2),_______, _______, _______, _______, _______, _______, KC_INS,  KC_DEL,  KC_LBRC, KC_RBRC,  _______,  _______,  KC_GRV,
         _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,_______,  _______,            _______,
         _______,          _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,   _______,            _______,
         _______, _______, _______,                            _______,                            _______,  _______,  _______,  _______),
 
     [_FN2] = LAYOUT_ansi_61(
-        KC_GRV,  KC_BRID, KC_BRIU, KC_TASK, KC_FLXP, RGB_VAD, RGB_VAI, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE,  KC_VOLD,  KC_VOLU,  RGB_MOD,
-        RGB_TOG, RGB_MOD, RGB_VAI, RGB_HUI, RGB_SAI, RGB_SPI, NK_TOGG, _______, KC_APP,  KC_SLCK, KC_INS,   KC_PGUP,  KC_HOME,  _______,
-        _______, RGB_RMOD,RGB_VAD, RGB_HUD, RGB_SAD, RGB_SPD, _______, _______, KC_UP,   KC_PSCR, KC_PGDN,  KC_END,             _______,
-        _______,          _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RIGHT, KC_DEL,             _______,
+        _______, ES_E,    _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,  _______,  _______,
+        _______, _______, _______, AC_E,    _______, _______, DI_U,    AC_U,    AC_I,    AC_O,    _______,  _______,  _______,  _______,
+        _______, AC_A,    _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______,            _______,
+        _______,          _______, _______, _______, _______, _______, TI_N,    _______, _______, _______,  ES_Q,               _______,
         _______, _______, _______,                            _______,                            _______,  _______,  _______,  _______),
 
     [_FN3] = LAYOUT_ansi_61(
