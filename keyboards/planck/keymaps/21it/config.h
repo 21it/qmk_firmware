@@ -47,3 +47,6 @@
 
 // Most tactile encoders have detents every 4 stages
 #define ENCODER_RESOLUTION 4
+
+#define UNICODE_SELECTED_MODES UC_LNX
+#define UNICODE_KEY_LNX LCTL(LSFT(KC_U))
