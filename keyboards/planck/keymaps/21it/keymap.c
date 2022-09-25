@@ -26,7 +26,15 @@ enum planck_layers {
 
 enum planck_keycodes {
   QWERTY = SAFE_RANGE,
-  BACKLIT
+  LOWER,
+  RAISE,
+  ADJUST,
+  BACKLIT,
+  EM_SRG,
+  EM_LEN,
+  EM_FLP,
+  EM_FIN,
+  EM_FIX
 };
 
 enum unicode_names {
@@ -82,10 +90,6 @@ const uint32_t PROGMEM unicode_map[] = {
 #define DI_U XP(DI_SU, DI_CU)
 #define ES_Q XP(REV_Q, REV_Q)
 #define ES_E XP(REV_E, REV_E)
-
-#define LOWER MO(_LOWER)
-#define RAISE MO(_RAISE)
-#define ADJUST MO(_ADJUST)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -164,15 +168,39 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
-layer_state_t layer_state_set_user(layer_state_t state) {
-  return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
-}
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case QWERTY:
       if (record->event.pressed) {
         set_single_persistent_default_layer(_QWERTY);
+      }
+      return false;
+      break;
+    case LOWER:
+      if (record->event.pressed) {
+        layer_on(_LOWER);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      } else {
+        layer_off(_LOWER);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      }
+      return false;
+      break;
+    case RAISE:
+      if (record->event.pressed) {
+        layer_on(_RAISE);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      } else {
+        layer_off(_RAISE);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+      }
+      return false;
+      break;
+    case ADJUST:
+      if (record->event.pressed) {
+        layer_on(_ADJUST);
+      } else {
+        layer_off(_ADJUST);
       }
       return false;
       break;
@@ -192,6 +220,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         #endif
       }
       return false;
+      break;
+    case EM_SRG:
+      if (record->event.pressed) {
+        send_unicode_string("¯\\_(ツ)_/¯");
+      }
+      break;
+    case EM_LEN:
+      if (record->event.pressed) {
+        send_unicode_string("( ͡° ͜ʖ ͡°)");
+      }
+      break;
+    case EM_FLP:
+      if (record->event.pressed) {
+        send_unicode_string("(╯°□°）╯︵ ┻━┻");
+      }
+      break;
+    case EM_FIN:
+      if (record->event.pressed) {
+        send_unicode_string("°◡°");
+      }
+      break;
+    case EM_FIX:
+      if (record->event.pressed) {
+        send_unicode_string("┬─┬ ノ( ゜-゜ノ)");
+      }
       break;
   }
   return true;
