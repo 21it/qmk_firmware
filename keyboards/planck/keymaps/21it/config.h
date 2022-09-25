@@ -16,6 +16,8 @@
 
 #pragma once
 
+#define RGBLIGHT_ANIMATIONS
+
 #ifdef AUDIO_ENABLE
 #    define AUDIO_INIT_DELAY
 #    define AUDIO_ENABLE_TONE_MULTIPLEXING
@@ -25,7 +27,6 @@
 #    define DEFAULT_LAYER_SONGS \
         { SONG(QWERTY_SOUND), SONG(COLEMAK_SOUND), SONG(DVORAK_SOUND) }
 #endif
-
 #define MUSIC_MASK (keycode != KC_NO)
 #define MIDI_BASIC
 #define MIDI_ADVANCED
