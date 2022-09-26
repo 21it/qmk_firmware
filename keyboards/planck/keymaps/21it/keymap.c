@@ -21,7 +21,8 @@ enum planck_layers {
   _QWERTY,
   _LOWER,
   _RAISE,
-  _ADJUST
+  _ADJUST,
+  _MEDIA
 };
 
 enum planck_keycodes {
@@ -29,6 +30,7 @@ enum planck_keycodes {
   LOWER,
   RAISE,
   ADJUST,
+  MEDIA,
   BACKLIT,
   EM_SRG,
   EM_LEN,
@@ -101,14 +103,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  | Enter|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Ctrl | GUI  | Raise| Alt  |Space |Space |Space |Space |AltGr |Adjust| GUI  | Ctrl |
+ * | Ctrl | GUI  | Raise| Alt  |Space |Space |Space |Space |AltGr |Media | GUI  | Ctrl |
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = LAYOUT_planck_grid(
     KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
     LOWER,   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-    KC_LCTL, KC_LGUI, RAISE,   KC_LALT, KC_SPC,  KC_SPC,  KC_SPC,  KC_SPC,  KC_ALGR, ADJUST,  KC_RGUI, KC_RCTL
+    KC_LCTL, KC_LGUI, RAISE,   KC_LALT, KC_SPC,  KC_SPC,  KC_SPC,  KC_SPC,  KC_ALGR, MEDIA,   KC_RGUI, KC_RCTL
 ),
 
 /* Lower
@@ -144,6 +146,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Adjust (Lower + Raise)
  *
+ * F-keys, mouse controls, emoji.
+ *
+ */
+[_ADJUST] = LAYOUT_planck_grid(
+  _______, KC_F1  , KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_BTN4, KC_BTN1, KC_BTN2, KC_BTN3, EM_FIN,  EM_LEN,
+  _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, EM_FIX,  EM_FLP,
+  _______, KC_F11,  KC_F12,  KC_PSCR, KC_SCRL, KC_PAUS, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______, _______,
+  _______, RESET,   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+),
+
+/* Media
+ *
+ * Media controls, settings, modes.
+ *
+ */
+
+[_MEDIA] = LAYOUT_planck_grid(
+    MU_TOG,  KC_BRID, KC_BRIU, _______, _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU,
+    _______, RGB_HUD, RGB_HUI, _______, _______, _______, RGB_SAD, RGB_MOD, RGB_SAI, RGB_TOG, RGB_VAD, RGB_VAI,
+    _______, RESET,   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+)
+
+/* Adjust (Lower + Raise)
+ *
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -154,12 +181,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |             |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
-[_ADJUST] = LAYOUT_planck_grid(
-    _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______,
-    _______, _______, MU_MOD,  AU_ON,   AU_OFF,  _______, _______, _______, _______,  _______, _______, _______,
-    _______, RESET,   MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  _______, _______, _______,  _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______
-)
+// [_ADJUST] = LAYOUT_planck_grid(
+//     _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______,
+//     _______, _______, MU_MOD,  AU_ON,   AU_OFF,  _______, _______, _______, _______,  _______, _______, _______,
+//     _______, RESET,   MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  _______, _______, _______,  _______, _______, _______,
+//     _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______
+// )
 
 /* Español
  * ,-----------------------------------------------------------------------------------.
@@ -214,6 +241,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_on(_ADJUST);
       } else {
         layer_off(_ADJUST);
+      }
+      return false;
+      break;
+    case MEDIA:
+      if (record->event.pressed) {
+        layer_on(_MEDIA);
+      } else {
+        layer_off(_MEDIA);
       }
       return false;
       break;
