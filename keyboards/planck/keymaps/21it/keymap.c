@@ -113,7 +113,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_LCTL, KC_LGUI, RAISE,   KC_LALT, KC_SPC,  KC_SPC,  KC_SPC,  KC_SPC,  KC_ALGR, MEDIA,   KC_RGUI, KC_RCTL
 ),
 
-/* Lower
+/* Lower/Raise
  * ,-----------------------------------------------------------------------------------.
  * |      |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
@@ -131,17 +131,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______, _______, KC_TAB,  KC_TAB,  _______, _______, KC_BSLS, KC_GRV,  _______, _______
 ),
 
-/* Raise
- *
- * F-keys, media controls, emoji, settings, modes.
- *
- */
-
 [_RAISE] = LAYOUT_planck_grid(
-    MU_TOG,  KC_BRID, KC_BRIU, _______, _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU,
-    _______, RGB_HUD, RGB_HUI, _______, _______, _______, RGB_SAD, RGB_MOD, RGB_SAI, RGB_TOG, RGB_VAD, RGB_VAI,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
+    _______, _______, _______, _______, _______, KC_INS,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_LBRC, KC_RBRC,
+    _______, _______, _______, _______, _______, KC_DEL,  KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_MINS, KC_EQL,
+    _______, _______, _______, _______, KC_TAB,  KC_TAB,  _______, _______, KC_BSLS, KC_GRV,  _______, _______
 ),
 
 /* Adjust (Lower + Raise)
