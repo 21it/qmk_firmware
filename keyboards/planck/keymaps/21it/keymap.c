@@ -22,7 +22,8 @@ enum planck_layers {
   _LOWER,
   _RAISE,
   _ADJUST,
-  _MEDIA
+  _MEDIA,
+  _FUN
 };
 
 enum planck_keycodes {
@@ -31,6 +32,7 @@ enum planck_keycodes {
   RAISE,
   ADJUST,
   MEDIA,
+  FUN,
   EM_SRG,
   EM_LEN,
   EM_FLP,
@@ -102,14 +104,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  | Enter|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Ctrl | GUI  | Raise| Alt  |Space |Space |Space |Space |AltGr |Media | GUI  | Ctrl |
+ * | Ctrl | GUI  | Raise| Alt  |Space |Space |Space |Space |AltGr |Media | Fun  | Ctrl |
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = LAYOUT_planck_grid(
     KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
     LOWER,   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-    KC_LCTL, KC_LGUI, RAISE,   KC_LALT, KC_SPC,  KC_SPC,  KC_SPC,  KC_SPC,  KC_ALGR, MEDIA,   KC_RGUI, KC_RCTL
+    KC_LCTL, KC_LGUI, RAISE,   KC_LALT, KC_SPC,  KC_SPC,  KC_SPC,  KC_SPC,  KC_ALGR, MEDIA,   FUN,     KC_RCTL
 ),
 
 /* Lower/Raise
@@ -156,9 +158,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
 [_MEDIA] = LAYOUT_planck_grid(
-    MU_TOG,  KC_BRID, KC_BRIU, _______, _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU,
-    _______, RGB_HUD, RGB_HUI, _______, _______, _______, RGB_SAD, RGB_MOD, RGB_SAI, RGB_TOG, RGB_VAD, RGB_VAI,
-    _______, RESET,   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, KC_BRID, KC_BRIU, _______, _______, _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+),
+
+/* Fun
+ *
+ * RGB, music and emoji.
+ *
+ */
+
+[_FUN] = LAYOUT_planck_grid(
+    _______, RGB_TOG, RGB_VAD, RGB_VAI, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, RGB_MOD, RGB_SAD, RGB_SAI, _______, _______, _______, _______, _______, _______, _______, _______,
+    _______, RGB_M_P, RGB_HUD, RGB_HUI, _______, _______, _______, _______, _______, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 )
 
@@ -242,6 +257,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_on(_MEDIA);
       } else {
         layer_off(_MEDIA);
+      }
+      return false;
+      break;
+    case FUN:
+      if (record->event.pressed) {
+        layer_on(_FUN);
+      } else {
+        layer_off(_FUN);
       }
       return false;
       break;
